@@ -70,6 +70,7 @@ class SignUpPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Add sign up functionality here
+                Navigator.pushNamed(context, '/home');
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(vertical: 15), backgroundColor: Colors.amber[700],

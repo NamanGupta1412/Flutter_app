@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'forgot_password_page.dart'; // Import the Forgot Password Page
-import 'sign_up_page.dart'; // Import the Sign Up Page
+import 'home_page.dart'; // Import HomePage
+import 'forgot_password_page.dart'; // Import ForgotPasswordPage
+import 'sign_up_page.dart'; // Import SignUpPage
 
 void main() {
   runApp(MyApp());
@@ -10,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Bumble Login',
+      title: 'Bumble App',
       theme: ThemeData(
         primarySwatch: Colors.amber,
       ),
@@ -19,13 +20,42 @@ class MyApp extends StatelessWidget {
         '/': (context) => BumbleLoginPage(), // Main page (Login)
         '/forgot-password': (context) => ForgotPasswordPage(), // Forgot Password page
         '/sign-up': (context) => SignUpPage(), // Sign Up page
+        '/home': (context) => HomePage(), // Home page
       },
-      initialRoute: '/',
+      initialRoute: '/', // Default route when app starts
     );
   }
 }
 
-class BumbleLoginPage extends StatelessWidget {
+class BumbleLoginPage extends StatefulWidget {
+  @override
+  _BumbleLoginPageState createState() => _BumbleLoginPageState();
+}
+
+class _BumbleLoginPageState extends State<BumbleLoginPage> {
+  // Controllers to capture username and password
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  // Variable to store error message
+  String? errorMessage;
+
+  // Function to validate the login credentials
+  void _validateLogin(BuildContext context) {
+    final username = _usernameController.text;
+    final password = _passwordController.text;
+
+    if (username == "arceus" && password == "namangupta") {
+      // If credentials are correct, navigate to Home page
+      Navigator.pushNamed(context, '/home');
+    } else {
+      // If credentials are incorrect, show error message
+      setState(() {
+        errorMessage = "Username or password is wrong";
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,19 +67,43 @@ class BumbleLoginPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // SizedBox(height: 100, child: FlutterLogo()), // Placeholder logo
+                SizedBox(height: 100, child: FlutterLogo()), // Placeholder logo
                 SizedBox(height: 20),
                 Text("Welcome to Bumble", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.amber[700])),
                 SizedBox(height: 10),
                 Text("Login to find your match!", style: TextStyle(fontSize: 18, color: Colors.grey[600])),
                 SizedBox(height: 40),
-                TextField(decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Email', prefixIcon: Icon(Icons.email))),
+                TextField(
+                  controller: _usernameController, // Attach controller
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Username',
+                    prefixIcon: Icon(Icons.person),
+                  ),
+                ),
                 SizedBox(height: 20),
-                TextField(obscureText: true, decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Password', prefixIcon: Icon(Icons.lock))),
+                TextField(
+                  controller: _passwordController, // Attach controller
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Password',
+                    prefixIcon: Icon(Icons.lock),
+                  ),
+                ),
+                SizedBox(height: 10),
+
+                // Show error message if credentials are wrong
+                if (errorMessage != null)
+                  Text(
+                    errorMessage!,
+                    style: TextStyle(color: Colors.red, fontSize: 16),
+                  ),
                 SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
-                    // Add login functionality here
+                    // Validate login credentials
+                    _validateLogin(context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.amber[700],
@@ -63,7 +117,6 @@ class BumbleLoginPage extends StatelessWidget {
                 // Forgot Password Link
                 TextButton(
                   onPressed: () {
-                    // Navigate to Forgot Password Page
                     Navigator.pushNamed(context, '/forgot-password');
                   },
                   child: Text("Forgot Password?", style: TextStyle(color: Colors.amber[700])),
@@ -76,7 +129,6 @@ class BumbleLoginPage extends StatelessWidget {
                     Text("Don't have an account? "),
                     GestureDetector(
                       onTap: () {
-                        // Navigate to Sign Up Page
                         Navigator.pushNamed(context, '/sign-up');
                       },
                       child: Text("Sign Up", style: TextStyle(color: Colors.amber[700], fontWeight: FontWeight.bold)),
