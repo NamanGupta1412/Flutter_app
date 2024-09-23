@@ -1,6 +1,8 @@
 # flutter_login_page
 
 A new Flutter project.
+Username: arceus
+password: namangupta
 
 ## Getting Started
 
