@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpPage extends StatelessWidget {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,15 +18,10 @@ class SignUpPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              "Create a new account",
-              style: TextStyle(fontSize: 18),
-              textAlign: TextAlign.center,
-            ),
+            Text("Create a new account", style: TextStyle(fontSize: 18), textAlign: TextAlign.center),
             SizedBox(height: 20),
-            
-            // Username TextField
             TextField(
+              controller: _usernameController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: "Username",
@@ -30,9 +30,8 @@ class SignUpPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-
-            // Email TextField
             TextField(
+              controller: _emailController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: "Email",
@@ -41,9 +40,8 @@ class SignUpPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-
-            // Password TextField
             TextField(
+              controller: _passwordController,
               obscureText: true,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -53,45 +51,15 @@ class SignUpPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-
-            // Confirm Password TextField
-            TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Confirm Password",
-                hintText: "Re-enter your password",
-                prefixIcon: Icon(Icons.lock),
-              ),
-            ),
-            SizedBox(height: 30),
-
-            // Sign Up Button
             ElevatedButton(
-              onPressed: () {
-                // Add sign up functionality here
-                Navigator.pushNamed(context, '/home');
-              },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 15), backgroundColor: Colors.amber[700],
-              ),
-              child: Text(
-                "Sign Up",
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-            SizedBox(height: 20),
+              onPressed: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.setString('username', _usernameController.text);
+                prefs.setString('password', _passwordController.text);
 
-            // Back to Login
-            TextButton(
-              onPressed: () {
-                // Navigate back to Login page
-                Navigator.pop(context);
+                Navigator.pushReplacementNamed(context, '/login'); // Navigate to login after sign-up
               },
-              child: Text(
-                "Already have an account? Login",
-                style: TextStyle(color: Colors.amber[700]),
-              ),
+              child: Text("Sign Up"),
             ),
           ],
         ),

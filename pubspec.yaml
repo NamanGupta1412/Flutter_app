@@ -11,16 +11,30 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_native_splash: ^2.0.6
   english_words: ^4.0.0
   provider: ^6.0.0
   http: ^0.13.5
+  shared_preferences: ^2.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^2.0.0
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/splash.jpg
+
+flutter_native_splash:
+  # General settings for splash screen
+  android: true
+  ios: true
+  color: "#ffffff"  # Background color of the splash screen
+  image: assets/splash.jpg  # Splash screen image
+  android_12:
+    # Android 12 specific settings (with icon background if needed)
+    icon_background_color: "#ffffff"  # Optional: Background color for Android 12 icon
+    image: assets/splash.jpg
+

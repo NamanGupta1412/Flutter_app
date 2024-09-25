@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
+  final TextEditingController _emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,46 +15,24 @@ class ForgotPasswordPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              "Enter your email to reset your password",
-              style: TextStyle(fontSize: 18),
-              textAlign: TextAlign.center,
-            ),
+            Text("Reset your password", style: TextStyle(fontSize: 18), textAlign: TextAlign.center),
             SizedBox(height: 20),
-            // Email TextField
             TextField(
+              controller: _emailController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: "Email",
-                hintText: "Enter your registered email",
+                hintText: "Enter your email",
                 prefixIcon: Icon(Icons.email),
               ),
             ),
             SizedBox(height: 20),
-            // Reset Password Button
             ElevatedButton(
               onPressed: () {
-                // Add functionality to send password reset
-              },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 15), backgroundColor: Colors.amber[700], // Bumble theme color
-              ),
-              child: Text(
-                "Send Reset Link",
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-            SizedBox(height: 20),
-            // Back to Login
-            TextButton(
-              onPressed: () {
-                // Navigate back to Login page
+                // Logic to reset password goes here
                 Navigator.pop(context);
               },
-              child: Text(
-                "Back to Login",
-                style: TextStyle(color: Colors.amber[700]),
-              ),
+              child: Text("Send Reset Link"),
             ),
           ],
         ),
